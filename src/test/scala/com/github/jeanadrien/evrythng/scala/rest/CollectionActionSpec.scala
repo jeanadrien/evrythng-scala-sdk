@@ -17,9 +17,10 @@ class CollectionActionSpec(implicit val ee : ExecutionEnv) extends ActionSpecBas
     override def beforeAll() : Unit = {
         super.beforeAll()
         Await.ready({
-            operator.collections.create(Collection(name = Some("acollection"))).exec map(collection = _)
+            operator.collections.create(Collection(name = Some("acollection"))).exec map (collection = _)
         }, 10 seconds)
     }
+
     override def ctx = operator.collection(collection.id.get).actions
 
     override val ctxRoot : String = "/collections/<id>/actions"

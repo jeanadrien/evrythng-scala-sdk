@@ -18,7 +18,9 @@ class ApplicationTrustedRestApi(override val apiKey : String) extends
 
     // auth
     object auth {
+
         object evrythng {
+
             object users {
                 def create(user : User) = post[User, UserStatus]("/auth/evrythng/users", user)
 
@@ -35,6 +37,7 @@ class ApplicationTrustedRestApi(override val apiKey : String) extends
             def login(email : String, password : String) =
                 post[User, UserStatus]("/auth/evrythng", User(email = Some(email), password = Some(password)))
         }
+
     }
 
     // products
@@ -73,6 +76,7 @@ class ApplicationTrustedRestApi(override val apiKey : String) extends
     // users
 
     def users = new ResourceContext[User](this, "/users") with Read[User]
+
     // actions
 
     // TODO remove this class, and replace ActionContext with ResourceContext

@@ -17,9 +17,10 @@ class ThngActionSpec(implicit val ee : ExecutionEnv) extends ActionSpecBase with
     override def beforeAll() : Unit = {
         super.beforeAll()
         Await.ready({
-            operator.thngs.create(Thng(name = Some("athng"))).exec map(thng = _)
+            operator.thngs.create(Thng(name = Some("athng"))).exec map (thng = _)
         }, 10 seconds)
     }
+
     override def ctx = operator.thng(thng.id.get).actions
 
     override val ctxRoot : String = "/thngs/<id>/actions"

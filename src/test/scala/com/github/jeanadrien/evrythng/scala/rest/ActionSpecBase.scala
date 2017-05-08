@@ -76,11 +76,11 @@ abstract class ActionSpecBase extends TestOperatorInScopeContext with BeforeAll 
 
     def listAllActions = ctx.all.list.exec map { page =>
         page.items.map(normalizeComparison)
-    } must containTheSameElementsAs((action1::action2::Nil).map(normalizeComparison)).await
+    } must containTheSameElementsAs((action1 :: action2 :: Nil).map(normalizeComparison)).await
 
     def listActionOfType1 = ctx(actionType1.name.get).list.exec map { page =>
         page.items.map(normalizeComparison)
-    } must containTheSameElementsAs((action1::Nil).map(normalizeComparison)).await
+    } must containTheSameElementsAs((action1 :: Nil).map(normalizeComparison)).await
 
     def loadSingleAction2 = ctx(actionType2.name.get).read(action2.id.get).exec map { action =>
         normalizeComparison(action)

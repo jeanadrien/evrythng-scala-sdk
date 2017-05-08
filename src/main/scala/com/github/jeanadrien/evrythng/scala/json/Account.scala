@@ -13,10 +13,10 @@ package com.github.jeanadrien.evrythng.scala.json
   * }
   */
 case class Account(
-    id : Option[Ref],
+    id        : Option[Ref],
     createdAt : Option[Long],
     updatedAt : Option[Long],
-    name : Option[String]
+    name      : Option[String]
 ) {
 
 }

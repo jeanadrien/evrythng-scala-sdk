@@ -12,7 +12,8 @@ class TrustedApplicationRestApiSpec(implicit val ee : ExecutionEnv)
 
     var theSecretKey : SecretKey = null
 
-    def is = sequential ^ s2"""
+    def is = sequential ^
+        s2"""
         The Trusted Application Rest ApiKey (no shit)
             can be requested by an operator     $readSecretKey
             and used to perform requests        $readSelf

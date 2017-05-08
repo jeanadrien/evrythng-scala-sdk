@@ -4,7 +4,7 @@ package com.github.jeanadrien.evrythng.scala.json
   *
   */
 case class Location(
-    latitude : Option[Double],
+    latitude  : Option[Double],
     longitude : Option[Double],
     timestamp : Option[Long] = None
 ) {
@@ -13,6 +13,6 @@ case class Location(
 
 object Location {
 
-    def of(latitude : Double, longitude : Double): Location = Location(Some(latitude), Some(longitude))
+    def of(latitude : Double, longitude : Double) : Location = Location(Some(latitude), Some(longitude))
 
 }

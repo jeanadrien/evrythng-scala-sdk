@@ -26,7 +26,7 @@ abstract class TestOperatorInScopeContext extends Specification with BeforeAll w
 
     var operator : OperatorContext = env.operatorApi(operatorKey)
 
-    override def beforeAll() : Unit = Await.ready( for {
+    override def beforeAll() : Unit = Await.ready(for {
         project <- operator.projects.create(Project(
             name = Some(s"itproject-${Random.nextInt(200000)}")
         )).exec
@@ -35,5 +35,5 @@ abstract class TestOperatorInScopeContext extends Specification with BeforeAll w
         this.containingProject = project
         this.operator = operator.inProject(project.id.get)
         ()
-    } , 10 seconds)
+    }, 10 seconds)
 }

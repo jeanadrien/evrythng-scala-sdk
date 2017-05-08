@@ -12,24 +12,24 @@ import spray.json.JsValue
   *"imageUrl": String,
   *"tags": [ String, ... ],
   *"identifiers": {
-    *Key: Value,
-    *...
+  *Key: Value,
+  *...
   *},
   *"customFields": {
-    *Key: Value,
-    *...
+  *Key: Value,
+  *...
   *}
-*}
+  *}
   */
 case class Project(
-    id : Option[Ref] = None,
-    createdAt : Option[Long] = None,
-    updatedAt : Option[Long] = None,
-    name : Option[String] = None,
-    description : Option[String] = None,
-    imageUrl : Option[String] = None,
-    tags : Option[List[String]] = None,
-    identifiers : Option[Map[String, String]] = None,
+    id           : Option[Ref] = None,
+    createdAt    : Option[Long] = None,
+    updatedAt    : Option[Long] = None,
+    name         : Option[String] = None,
+    description  : Option[String] = None,
+    imageUrl     : Option[String] = None,
+    tags         : Option[List[String]] = None,
+    identifiers  : Option[Map[String, String]] = None,
     customFields : Option[Map[String, JsValue]] = None
 ) {
 

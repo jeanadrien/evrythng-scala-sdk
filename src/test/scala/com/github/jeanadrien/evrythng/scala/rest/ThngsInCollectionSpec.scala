@@ -1,4 +1,5 @@
 package com.github.jeanadrien.evrythng.scala.rest
+
 import com.github.jeanadrien.evrythng.scala.json.{Collection, Thng}
 import org.specs2.concurrent.ExecutionEnv
 import org.specs2.specification.BeforeAll
@@ -51,9 +52,9 @@ class ThngsInCollectionSpec(implicit val ee : ExecutionEnv) extends TestOperator
     override def is = sequential ^
         s2""""
             Collection thng manipulation API allows to
-                add a thng to a collection                      ${addSomeThngs(thngA::Nil)}
+                add a thng to a collection                      ${addSomeThngs(thngA :: Nil)}
                 and see it's there                              $checkCollectionContent
-                add multiple thngs to a collection              ${addSomeThngs(thngA::thngB::thngC::Nil)}
+                add multiple thngs to a collection              ${addSomeThngs(thngA :: thngB :: thngC :: Nil)}
                 and see they're all there but unique            $checkCollectionContent
                 remove a thng from a collection                 ${removeFromCollection(thngB)}
                 and see it has been removed                     $checkCollectionContent
@@ -72,12 +73,14 @@ class ThngsInCollectionSpec(implicit val ee : ExecutionEnv) extends TestOperator
 
     def checkCollectionContent = operator.collection(collectionA.id.get).thngs.read.exec.map { page =>
         page.items.map(_.copy(properties = None, collections = None, updatedAt = None))
-    } must containTheSameElementsAs(contentSet.toList.map(_.copy(properties = None, collections = None, updatedAt = None))).await
+    } must containTheSameElementsAs(contentSet.toList
+        .map(_.copy(properties = None, collections = None, updatedAt = None))).await
 
-    def removeFromCollection(thng : Thng) = operator.collection(collectionA.id.get).thngs.remove(thng.id.get).exec.map { _ =>
-        contentSet = contentSet - thng
-        ()
-    } must beEqualTo(()).await
+    def removeFromCollection(thng : Thng) = operator.collection(collectionA.id.get).thngs.remove(thng.id.get).exec
+        .map { _ =>
+            contentSet = contentSet - thng
+            ()
+        } must beEqualTo(()).await
 
     def removeAllFromCollection = operator.collection(collectionA.id.get).thngs.removeAll.exec.map { _ =>
         contentSet = contentSet.empty

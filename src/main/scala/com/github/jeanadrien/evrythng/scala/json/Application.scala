@@ -26,17 +26,17 @@ import spray.json.JsValue
   * }
   */
 case class Application(
-    id : Option[Ref] = None,
-    createdAt : Option[Long] = None,
-    updatedAt : Option[Long] = None,
-    name : Option[String] = None,
-    description : Option[String] = None,
-    project : Option[Ref] = None,
-    defaultUrl : Option[String] = None,
+    id             : Option[Ref] = None,
+    createdAt      : Option[Long] = None,
+    updatedAt      : Option[Long] = None,
+    name           : Option[String] = None,
+    description    : Option[String] = None,
+    project        : Option[Ref] = None,
+    defaultUrl     : Option[String] = None,
     socialNetworks : Option[Map[String, JsValue]] = None,
-    tags : Option[List[String]] = None,
-    customFields : Option[Map[String, JsValue]] = None,
-    appApiKey : Option[String] = None
+    tags           : Option[List[String]] = None,
+    customFields   : Option[Map[String, JsValue]] = None,
+    appApiKey      : Option[String] = None
 ) {
 
 }

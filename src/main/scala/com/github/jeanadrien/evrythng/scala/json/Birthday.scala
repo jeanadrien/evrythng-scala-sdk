@@ -8,7 +8,7 @@ package com.github.jeanadrien.evrythng.scala.json
   * }
   */
 case class Birthday(
-    day : Int,
+    day   : Int,
     month : Int,
-    year : Option[Int] = None
+    year  : Option[Int] = None
 )

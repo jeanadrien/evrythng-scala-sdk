@@ -22,8 +22,10 @@ class ApplicationRestApiSpec(implicit val ee : ExecutionEnv) extends TestApplica
         Await.ready(
             for {
                 productOutOfScope <- operator.products.create(Product(name = Some("TestProductOutOfScope"))).exec
-                productInScope <- operator.products.create(Product(name = Some("TestProductInScope"))).project(containingProject).exec
-                placeInScope <- operator.places.create(Place(name = Some("TestPlaceInScope"))).project(containingProject).exec
+                productInScope <- operator.products.create(Product(name = Some("TestProductInScope")))
+                    .project(containingProject).exec
+                placeInScope <- operator.places.create(Place(name = Some("TestPlaceInScope")))
+                    .project(containingProject).exec
             } yield {
                 testProductOutOfScope = normProductComparison(productOutOfScope)
                 testProductInScope = normProductComparison(productInScope)
@@ -35,7 +37,8 @@ class ApplicationRestApiSpec(implicit val ee : ExecutionEnv) extends TestApplica
         )
     }
 
-    def is = sequential ^ s2"""
+    def is = sequential ^
+        s2"""
         Using an application apiKey, it is possible to
             know who I am                          $knowWhoIAm
             see a Product in scope                 $seeProductInScope
@@ -45,7 +48,7 @@ class ApplicationRestApiSpec(implicit val ee : ExecutionEnv) extends TestApplica
 
     """
 
-    def normProductComparison(p: Product) : Product = p.copy(properties = None)
+    def normProductComparison(p : Product) : Product = p.copy(properties = None)
 
     def knowWhoIAm =
         applicationApi.me.read.exec must beEqualTo(application).await
@@ -61,7 +64,7 @@ class ApplicationRestApiSpec(implicit val ee : ExecutionEnv) extends TestApplica
 
     def listProductsInScope =
         applicationApi.products.list.exec map (_.items.map(normProductComparison)) must
-            containTheSameElementsAs(testProductInScope::Nil).await
+            containTheSameElementsAs(testProductInScope :: Nil).await
 
     def seePlaceInScope =
         applicationApi.places.read(testPlaceInScope.id.get).exec must beEqualTo(testPlaceInScope).await

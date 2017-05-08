@@ -11,13 +11,13 @@ import scala.util.{Random, Success}
 /**
   *
   */
-class ThngPaginationSpec(implicit val ee: ExecutionEnv) extends TestOperatorInScopeContext with BeforeAll {
+class ThngPaginationSpec(implicit val ee : ExecutionEnv) extends TestOperatorInScopeContext with BeforeAll {
 
     private var thngs : Seq[Thng] = Seq[Thng]()
 
     val timeout = 2500 milliseconds
 
-    private def createThngs(howMuch : Int) = Seq.fill(howMuch){
+    private def createThngs(howMuch : Int) = Seq.fill(howMuch) {
         operator.thngs.create {
             Thread.sleep(50)
             Thng(name = Some(Random.nextString(12)))
@@ -37,7 +37,8 @@ class ThngPaginationSpec(implicit val ee: ExecutionEnv) extends TestOperatorInSc
 
     private def normalizeComparison(t : Thng) = t.copy(properties = None, updatedAt = None)
 
-    def is = sequential ^ s2"""
+    def is = sequential ^
+        s2"""
         The Thng Pagination
             returns all 5 results by default                            $allResults
             understands perPage query parameter                         $perPageQp
@@ -45,7 +46,8 @@ class ThngPaginationSpec(implicit val ee: ExecutionEnv) extends TestOperatorInSc
     """
 
     def allResults() = {
-        operator.thngs.list().exec.map(_.items.map(normalizeComparison)) must containTheSameElementsAs(thngs.map(normalizeComparison)).await
+        operator.thngs.list().exec.map(_.items.map(normalizeComparison)) must containTheSameElementsAs(thngs
+            .map(normalizeComparison)).await
     }
 
     def perPageQp() = {
@@ -55,7 +57,8 @@ class ThngPaginationSpec(implicit val ee: ExecutionEnv) extends TestOperatorInSc
     }
 
     def allowsToIterate() = {
-        def iteratePages(current : EvtGetPageRequest[Thng], acc : Seq[Thng]) : Future[Seq[Thng]] = current.exec flatMap { page =>
+        def iteratePages(current : EvtGetPageRequest[Thng], acc : Seq[Thng]) : Future[Seq[Thng]] = current
+            .exec flatMap { page =>
             operator.nextPage(page) match {
                 case Some(req) =>
                     iteratePages(req, acc ++ page.items)
@@ -64,7 +67,8 @@ class ThngPaginationSpec(implicit val ee: ExecutionEnv) extends TestOperatorInSc
             }
         }
 
-        iteratePages(operator.thngs.list().perPage(2), Seq()).map(_.map(normalizeComparison)) must containTheSameElementsAs(thngs.map(normalizeComparison)).await
+        iteratePages(operator.thngs.list().perPage(2), Seq())
+            .map(_.map(normalizeComparison)) must containTheSameElementsAs(thngs.map(normalizeComparison)).await
     }
 
 

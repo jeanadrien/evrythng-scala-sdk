@@ -39,7 +39,7 @@ class ProjectCrudSpec(implicit val ee : ExecutionEnv) extends TestOperatorContex
             name = Some(randomName),
             description = Some(randomDescription),
             imageUrl = Some("http://image.url"),
-            tags = Some("t1"::"t3"::Nil),
+            tags = Some("t1" :: "t3" :: Nil),
             identifiers = Some(Map("id1" -> "val1", "id2" -> "val2")),
             customFields = Some(Map("cf1" -> JsString("cf1val"), "cf2" -> JsString("cf2val")))
         )

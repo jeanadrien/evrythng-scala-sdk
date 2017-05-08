@@ -11,7 +11,7 @@ import scala.util.Random
 /**
   *
   */
-class CollectionsInCollectionSpec (implicit val ee : ExecutionEnv) extends TestOperatorContext with BeforeAll {
+class CollectionsInCollectionSpec(implicit val ee : ExecutionEnv) extends TestOperatorContext with BeforeAll {
 
     // test data
 
@@ -48,9 +48,9 @@ class CollectionsInCollectionSpec (implicit val ee : ExecutionEnv) extends TestO
     override def is = sequential ^
         s2""""
             Collections in collection manipulation API allows to
-                add a collection to a collection                      ${addSomeCollections(collectionA::Nil)}
+                add a collection to a collection                      ${addSomeCollections(collectionA :: Nil)}
                 and see it's there                                    $checkCollectionContent
-                add multiple collections to a collection              ${addSomeCollections(collectionA::collectionB::collectionC::Nil)}
+                add multiple collections to a collection              ${addSomeCollections(collectionA :: collectionB :: collectionC :: Nil)}
                 and see they're all there but unique                  $checkCollectionContent
                 remove a collection from a collection                 ${removeFromCollection(collectionB)}
                 and see it has been removed                           $checkCollectionContent
@@ -71,7 +71,8 @@ class CollectionsInCollectionSpec (implicit val ee : ExecutionEnv) extends TestO
         page.items.map(_.copy(collections = None, updatedAt = None))
     } must containTheSameElementsAs(contentSet.toList.map(_.copy(collections = None, updatedAt = None))).await
 
-    def removeFromCollection(collection : Collection) = operator.collection(parentCollection.id.get).collections.remove(collection.id.get).exec.map { _ =>
+    def removeFromCollection(collection : Collection) = operator.collection(parentCollection.id.get).collections
+        .remove(collection.id.get).exec.map { _ =>
         contentSet = contentSet - collection
         ()
     } must beEqualTo(()).await

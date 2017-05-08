@@ -10,9 +10,10 @@ import scala.util.Random
 /**
   *
   */
-class ThngCrudSpec(implicit val ee: ExecutionEnv) extends TestOperatorContext {
+class ThngCrudSpec(implicit val ee : ExecutionEnv) extends TestOperatorContext {
 
-    def is = sequential ^ s2"""
+    def is = sequential ^
+        s2"""
         The Thng CRUD
             is creating a Thng          $createTheThng
             is reading the Thng         $readTheThng
@@ -69,7 +70,8 @@ class ThngCrudSpec(implicit val ee: ExecutionEnv) extends TestOperatorContext {
     }
 
     def readTheThng =
-        operator.thngs.read(theThng.id.get).exec.map(normalizeComparison) must beEqualTo(normalizeComparison(theThng)).awaitFor(timeout)
+        operator.thngs.read(theThng.id.get).exec.map(normalizeComparison) must beEqualTo(normalizeComparison(theThng))
+            .awaitFor(timeout)
 
     def updateTheThng = {
         val newRandomname = Random.nextString(10)
@@ -85,7 +87,7 @@ class ThngCrudSpec(implicit val ee: ExecutionEnv) extends TestOperatorContext {
 
     def missTheThng =
         operator.thngs.read(theThng.id.get).exec must throwAn[EvtRequestException].like {
-        case e : EvtRequestException => e.evtError.status must beEqualTo(404)
-    }.awaitFor(timeout)
+            case e : EvtRequestException => e.evtError.status must beEqualTo(404)
+        }.awaitFor(timeout)
 
 }

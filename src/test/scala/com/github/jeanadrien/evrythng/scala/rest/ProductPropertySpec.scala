@@ -60,16 +60,19 @@ class ProductPropertySpec(implicit val ee : ExecutionEnv) extends TestOperatorCo
     } must containTheSameElementsAs(theProperties).await
 
     def updateProperty(key : String, value : String) =
-        operator.product(containingProduct.id.get).properties(key).update(JsString(value)).exec map { updated : List[Property] =>
-            theProperties = updated ::: theProperties
-            updated.map(_.copy(timestamp = None))
-        } must containTheSameElementsAs(Property(key = Some(key), value = JsString(value))::Nil).await
+        operator.product(containingProduct.id.get).properties(key).update(JsString(value)).exec map {
+            updated : List[Property] =>
+                theProperties = updated ::: theProperties
+                updated.map(_.copy(timestamp = None))
+        } must containTheSameElementsAs(Property(key = Some(key), value = JsString(value)) :: Nil).await
 
-    def loadPropertyHistory(key : String) = operator.product(containingProduct.id.get).properties(key).list.exec map { page =>
-        page.items
+    def loadPropertyHistory(key : String) = operator.product(containingProduct.id.get).properties(key).list.exec map {
+        page =>
+            page.items
     } must containTheSameElementsAs(theProperties.filter(_.key == Some(key)).map(_.copy(key = None))).await
 
-    def deletePropertiesOfKey(key : String) = operator.product(containingProduct.id.get).properties(key).remove.exec map { _ =>
+    def deletePropertiesOfKey(key : String) = operator.product(containingProduct.id.get).properties(key).remove
+        .exec map { _ =>
         theProperties = theProperties.filterNot(_.key == Some(key))
         ()
     } must beEqualTo(()).await
@@ -79,8 +82,11 @@ class ProductPropertySpec(implicit val ee : ExecutionEnv) extends TestOperatorCo
         ()
     } must beEqualTo(()).await
 
-    def addMutipleProperties = addProductProperties(randomProperty(propertyKey1)::randomProperty(propertyKey2)::Nil)
+    def addMutipleProperties = addProductProperties(randomProperty(propertyKey1) :: randomProperty(propertyKey2) :: Nil)
+
     def updatePropertyKey2 = updateProperty(propertyKey2, Random.nextString(10))
+
     def loadProperty2History = loadPropertyHistory(propertyKey2)
+
     def deleteProperty2 = deletePropertiesOfKey(propertyKey2)
 }

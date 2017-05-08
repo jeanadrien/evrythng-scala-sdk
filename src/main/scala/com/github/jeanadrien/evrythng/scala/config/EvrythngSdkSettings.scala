@@ -23,6 +23,6 @@ trait EvrythngSdkSettings {
 
 object EvrythngSdkSettings {
 
-    lazy val config: Config = ConfigFactory.load()
+    lazy val config : Config = ConfigFactory.load()
 
 }

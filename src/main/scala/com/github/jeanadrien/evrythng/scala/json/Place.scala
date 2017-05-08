@@ -43,16 +43,16 @@ import spray.json.JsValue
   * }
   */
 case class Place(
-    id : Option[Ref] = None,
-    createdAt : Option[Long] = None,
-    updatedAt : Option[Long] = None,
-    name : Option[String] = None,
-    position : Option[Position] = None,
-    address : Option[Address] = None,
-    description : Option[String] = None,
-    icon : Option[String] = None,
-    tags : Option[List[String]] = None,
-    identifiers : Option[Map[String, String]] = None,
+    id           : Option[Ref] = None,
+    createdAt    : Option[Long] = None,
+    updatedAt    : Option[Long] = None,
+    name         : Option[String] = None,
+    position     : Option[Position] = None,
+    address      : Option[Address] = None,
+    description  : Option[String] = None,
+    icon         : Option[String] = None,
+    tags         : Option[List[String]] = None,
+    identifiers  : Option[Map[String, String]] = None,
     customFields : Option[Map[String, JsValue]] = None
 ) {
 

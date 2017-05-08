@@ -7,40 +7,40 @@ import spray.json.JsValue
   *"id": Ref,
   *"createdAt": Timestamp,
   *"updatedAt": Timestamp,
- 	*"name": String,
+  *"name": String,
   *"description": String,
   *"brand": String,
   *"categories": [ String, ...],
   *"photos": [ String, ... ],    // list of URLs
   *"url": String,
   *"identifiers": {
-    *Key: Value,                 // both key and value should be Strings
-    *...
+  *Key: Value,                 // both key and value should be Strings
+  *...
   *},
   *"properties": {
-    *Key: Value,
-    *...
+  *Key: Value,
+  *...
   *},
   *"tags": [ String, ... ],
   *"customFields": {
-    *Key: Value,
-    *...
+  *Key: Value,
+  *...
   *}
-*}
+  *}
   */
 case class Product(
-    id : Option[Ref] = None,
-    createdAt : Option[Long] = None,
-    updatedAt : Option[Long] = None,
-    name : Option[String],
-    description : Option[String] = None,
-    brand : Option[String] = None,
-    categories : Option[List[String]] = None,
-    url : Option[String] = None,
-    photos : Option[List[String]] = None,
-    identifiers : Option[Map[String, String]] = None,
-    properties : Option[Map[String, JsValue]] = None,
-    tags : Option[List[String]] = None,
+    id           : Option[Ref] = None,
+    createdAt    : Option[Long] = None,
+    updatedAt    : Option[Long] = None,
+    name         : Option[String],
+    description  : Option[String] = None,
+    brand        : Option[String] = None,
+    categories   : Option[List[String]] = None,
+    url          : Option[String] = None,
+    photos       : Option[List[String]] = None,
+    identifiers  : Option[Map[String, String]] = None,
+    properties   : Option[Map[String, JsValue]] = None,
+    tags         : Option[List[String]] = None,
     customFields : Option[Map[String, JsValue]] = None
 ) {
 

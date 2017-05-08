@@ -1,4 +1,5 @@
 package com.github.jeanadrien.evrythng.scala.rest
+
 import org.specs2.concurrent.ExecutionEnv
 
 /**

@@ -28,18 +28,18 @@ import spray.json._
   * }
   */
 case class Thng(
-    name               : Option[String] = None,
-    description        : Option[String] = None,
-    product            : Option[Ref] = None,
-    location           : Option[Location] = None,
-    identifiers : Option[Map[String, String]] = None,
-    properties         : Option[Map[String, JsValue]] = None,
+    name         : Option[String] = None,
+    description  : Option[String] = None,
+    product      : Option[Ref] = None,
+    location     : Option[Location] = None,
+    identifiers  : Option[Map[String, String]] = None,
+    properties   : Option[Map[String, JsValue]] = None,
     customFields : Option[Map[String, JsValue]] = None,
-    tags               : Option[List[String]] = None,
-    collections        : Option[List[Ref]] = None,
-    id                 : Option[Ref] = None,
-    updatedAt          : Option[Long] = None,
-    createdAt          : Option[Long] = None
+    tags         : Option[List[String]] = None,
+    collections  : Option[List[Ref]] = None,
+    id           : Option[Ref] = None,
+    updatedAt    : Option[Long] = None,
+    createdAt    : Option[Long] = None
 ) {
 
 }

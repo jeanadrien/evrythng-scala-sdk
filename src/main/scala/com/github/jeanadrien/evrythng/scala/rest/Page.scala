@@ -6,9 +6,9 @@ import spray.json.JsonReader
   *
   */
 class Page[T](
-    val items : Seq[T],
+    val items       : Seq[T],
     val nextPageUrl : Option[String],
-    val reader : JsonReader[T]
+    val reader      : JsonReader[T]
 ) {
     // TODO case class ?
 }

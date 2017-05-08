@@ -27,7 +27,8 @@ class DeviceAuthSpec(implicit val ee : ExecutionEnv) extends TestUserInAppContex
         )
     }
 
-    def is = sequential ^ s2"""
+    def is = sequential ^
+        s2"""
         Using a user apiKey, it is possible to
             create device key for a visible thng        $createDeviceKey
             read the device key                         $readTheDeviceKey
@@ -84,23 +85,23 @@ class DeviceAuthSpec(implicit val ee : ExecutionEnv) extends TestUserInAppContex
         value = JsString(Random.alphanumeric.take(20).mkString)
     )
 
-    def deviceCreatesProps = deviceApi.thng.properties.create(prop::Nil).exec.map(
+    def deviceCreatesProps = deviceApi.thng.properties.create(prop :: Nil).exec.map(
         _.map(_.copy(timestamp = None))
-    ) must containTheSameElementsAs(prop::Nil).await
+    ) must containTheSameElementsAs(prop :: Nil).await
 
     def deviceReadsProps = deviceApi.thng.properties(prop.key.get).list.exec.map(
         _.items.map(_.copy(timestamp = None, key = prop.key))
-    ) must containTheSameElementsAs(prop::Nil).await
+    ) must containTheSameElementsAs(prop :: Nil).await
 
     var location = Location(Some(23.5), Some(12.3))
 
-    def deviceCreatesLocation = deviceApi.thng.location.create(location::Nil).exec.map(
+    def deviceCreatesLocation = deviceApi.thng.location.create(location :: Nil).exec.map(
         _.map(_.copy(timestamp = None))
-    ) must containTheSameElementsAs(location::Nil).await
+    ) must containTheSameElementsAs(location :: Nil).await
 
     def deviceReadsLocation = deviceApi.thng.location.list.exec.map(
         _.items.map(_.copy(timestamp = None))
-    ) must containTheSameElementsAs(location::Nil).await
+    ) must containTheSameElementsAs(location :: Nil).await
 
     var scanAction : Action = null;
     val normActionComparison = (a : Action) => a.copy(
@@ -116,10 +117,10 @@ class DeviceAuthSpec(implicit val ee : ExecutionEnv) extends TestUserInAppContex
 
     def deviceReadsAction = deviceApi.thng.actions("scans").list.exec.map(
         _.items.map(normActionComparison)
-    ) must containTheSameElementsAs(normActionComparison(scanAction)::Nil).await
+    ) must containTheSameElementsAs(normActionComparison(scanAction) :: Nil).await
 
     def userDeauthDevice =
-        userApi.auth.evrythng.thngs.remove(deviceThng.id.get).exec map(_ => ()) must beEqualTo(()).await
+        userApi.auth.evrythng.thngs.remove(deviceThng.id.get).exec map (_ => ()) must beEqualTo(()).await
 
     def userMissDevice =
         userApi.auth.evrythng.thngs.read(deviceThng.id.get).exec must throwAn[EvtRequestException].like {

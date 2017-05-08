@@ -30,4 +30,5 @@ trait Delete[R] extends ResourceContext[R] {
 }
 
 trait Crud[R] extends ResourceContext[R] with Create[R] with Read[R] with Update[R] with Delete[R]
+
 trait Cru[R] extends ResourceContext[R] with Create[R] with Read[R] with Update[R]

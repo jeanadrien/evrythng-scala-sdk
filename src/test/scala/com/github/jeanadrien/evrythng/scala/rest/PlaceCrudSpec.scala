@@ -10,9 +10,10 @@ import scala.util.Random
 /**
   *
   */
-class PlaceCrudSpec(implicit val ee: ExecutionEnv) extends TestOperatorContext {
+class PlaceCrudSpec(implicit val ee : ExecutionEnv) extends TestOperatorContext {
 
-    def is = sequential ^ s2"""
+    def is = sequential ^
+        s2"""
         The Place CRUD
             is creating a Place                  $createThePlace
             is reading the Place                 $readThePlace
@@ -56,7 +57,7 @@ class PlaceCrudSpec(implicit val ee: ExecutionEnv) extends TestOperatorContext {
         val randomCustomFields = Map(
             "cfkey1" -> JsString(Random.nextString(5))
         )
-        val randomTags = Random.nextString(5)::Random.nextString(5)::Nil
+        val randomTags = Random.nextString(5) :: Random.nextString(5) :: Nil
 
         val newPlace = Place(
             name = Some(randomName),
@@ -79,7 +80,7 @@ class PlaceCrudSpec(implicit val ee: ExecutionEnv) extends TestOperatorContext {
         operator.places.read(thePlace.id.get).exec must beEqualTo(thePlace).awaitFor(timeout)
 
     def geofilterThePlace =
-        operator.places.listAround(position.point, 0.5).exec.map(_.items) must beEqualTo(thePlace::Nil).await
+        operator.places.listAround(position.point, 0.5).exec.map(_.items) must beEqualTo(thePlace :: Nil).await
 
     def geofilterMissThePlace =
         operator.places.listAround((-10.4, -43.2), 0.5).exec.map(_.items) must beEqualTo(Nil).await

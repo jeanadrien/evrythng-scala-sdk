@@ -17,9 +17,10 @@ class ProductActionSpec(implicit val ee : ExecutionEnv) extends ActionSpecBase w
     override def beforeAll() : Unit = {
         super.beforeAll()
         Await.ready({
-            operator.products.create(Product(name = Some("aproduct"))).exec map(product = _)
+            operator.products.create(Product(name = Some("aproduct"))).exec map (product = _)
         }, 10 seconds)
     }
+
     override def ctx = operator.product(product.id.get).actions
 
     override val ctxRoot : String = "/products/<id>/actions"

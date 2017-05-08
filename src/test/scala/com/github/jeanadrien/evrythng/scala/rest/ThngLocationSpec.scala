@@ -73,12 +73,12 @@ class ThngLocationSpec(implicit val ee : ExecutionEnv) extends TestOperatorConte
             ()
         } must beEqualTo(()).await
 
-    def addLocation1 = addLocations(randomLocation(timestamp1)::Nil)
+    def addLocation1 = addLocations(randomLocation(timestamp1) :: Nil)
 
     def addOtherLocations = addLocations(
-            randomLocation(timestamp2)::
-            randomLocation(timestamp3)::
-            randomLocation(timestamp4)::
-            randomLocation(timestamp5)::Nil
+        randomLocation(timestamp2) ::
+            randomLocation(timestamp3) ::
+            randomLocation(timestamp4) ::
+            randomLocation(timestamp5) :: Nil
     )
 }

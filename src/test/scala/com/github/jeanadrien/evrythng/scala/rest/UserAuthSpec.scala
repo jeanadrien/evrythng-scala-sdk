@@ -16,13 +16,14 @@ class UserAuthSpec(implicit val ee : ExecutionEnv) extends TestApplicationContex
     override def beforeAll() : Unit = {
         super.beforeAll()
         Await.ready(
-            operator.thngs.create(Thng(name = Some("aScoppedThng"))).project(containingProject).exec.map( t =>
+            operator.thngs.create(Thng(name = Some("aScoppedThng"))).project(containingProject).exec.map(t =>
                 theAppThng = t.copy(properties = None)
             ), 10 seconds
         )
     }
 
-    def is = sequential ^ s2"""
+    def is = sequential ^
+        s2"""
         Using an application apiKey, it is possible to
             create an anonymous user                        $createAnAnonymousUser
             and use it directly                             $checkAnonymousUserKey
@@ -67,6 +68,7 @@ class UserAuthSpec(implicit val ee : ExecutionEnv) extends TestApplicationContex
     ).await
 
     def checkAnonymousUserKey = checkUserKey(theAnonymousUser.evrythngApiKey.get)
+
     def checkRegularUserKey = checkUserKey(theRegularUser.evrythngApiKey.get)
 
     def createRegularUser = applicationApi.auth.evrythng.users.create(
@@ -93,7 +95,8 @@ class UserAuthSpec(implicit val ee : ExecutionEnv) extends TestApplicationContex
             _.copy(email = None)
         ) must beEqualTo(theRegularUser).await
 
-    def opListUsers = operator.inProject(containingProject.id.get).users.list.exec.map(_.items.size) must beEqualTo(1).await
+    def opListUsers = operator.inProject(containingProject.id.get).users.list.exec.map(_.items.size) must beEqualTo(1)
+        .await
 
     def opSeeUser = operator.users.read(theRegularUser.evrythngUser.get).exec.map { user =>
         theRegularUserObject = user
@@ -109,7 +112,8 @@ class UserAuthSpec(implicit val ee : ExecutionEnv) extends TestApplicationContex
             } must beEqualTo(newLastName).await
     }
 
-    def opDeleteUser = operator.users.remove(theAnonymousUser.evrythngUser.get).exec.map(_ => ()) must beEqualTo(()).await
+    def opDeleteUser = operator.users.remove(theAnonymousUser.evrythngUser.get).exec.map(_ => ()) must beEqualTo(())
+        .await
 
     def userSeeItself = env.userApi(theRegularUser).users.read.exec must beEqualTo(theRegularUserObject).await
 

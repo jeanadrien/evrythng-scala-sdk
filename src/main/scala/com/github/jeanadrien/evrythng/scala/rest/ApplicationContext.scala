@@ -7,7 +7,7 @@ import com.typesafe.scalalogging.LazyLogging
 /**
   *
   */
-class ApplicationContext(projectId : Ref, applicationId: Ref, val apiKey : String) extends
+class ApplicationContext(projectId : Ref, applicationId : Ref, val apiKey : String) extends
     Environment with AuthorizedEnvironment with LazyLogging {
 
     val secretKey = new {

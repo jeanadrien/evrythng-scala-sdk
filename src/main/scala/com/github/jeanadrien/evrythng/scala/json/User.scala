@@ -24,16 +24,16 @@ import spray.json.JsValue
   *   "tags": [ String, ... ]
   * }
   */
-case class User (
-    email : Option[String] = None,
-    firstName : Option[String] = None,
-    lastName : Option[String] = None,
-    password : Option[String] = None,
-    birthday : Option[Birthday] = None,
-    gender : Option[String] = None,
-    timezone : Option[String] = None,
-    locale : Option[String] = None,
-    photo : Option[String] = None,
+case class User(
+    email        : Option[String] = None,
+    firstName    : Option[String] = None,
+    lastName     : Option[String] = None,
+    password     : Option[String] = None,
+    birthday     : Option[Birthday] = None,
+    gender       : Option[String] = None,
+    timezone     : Option[String] = None,
+    locale       : Option[String] = None,
+    photo        : Option[String] = None,
     customFields : Option[Map[String, JsValue]] = None,
-    tags : Option[List[String]] = None
+    tags         : Option[List[String]] = None
 )

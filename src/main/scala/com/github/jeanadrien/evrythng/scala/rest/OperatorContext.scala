@@ -6,13 +6,12 @@ import javax.imageio.ImageIO
 import com.github.jeanadrien.evrythng.scala.json.EvtJsonProtocol._
 import com.github.jeanadrien.evrythng.scala.json._
 import com.typesafe.scalalogging.LazyLogging
-import spray.json.JsonFormat
 
 /**
   *
   */
 class OperatorContext(val apiKey : String, projectScope : Option[Ref] = None) extends
-Environment with AuthorizedEnvironment with LazyLogging {
+    Environment with AuthorizedEnvironment with LazyLogging {
 
     // TODO rename
     // TODO should be Operator root context (or root context)
@@ -99,14 +98,15 @@ Environment with AuthorizedEnvironment with LazyLogging {
                     is.close()
                 }
             }
-        }
+            }
 
         def update(shortId : String, redirection : Redirection) =
             shortDomain.put[Redirection, Redirection](s"/redirections/${shortId}", redirection)
 
         def remove(shortId : String) = shortDomain.delete(s"/redirections/${shortId}")
 
-        def lookup(evrythngId : Ref) = shortDomain.getPage[Redirection]("/redirections").queryParameter("evrythngId" -> evrythngId.id)
+        def lookup(evrythngId : Ref) = shortDomain.getPage[Redirection]("/redirections")
+            .queryParameter("evrythngId" -> evrythngId.id)
 
         // TODO add non json
     }

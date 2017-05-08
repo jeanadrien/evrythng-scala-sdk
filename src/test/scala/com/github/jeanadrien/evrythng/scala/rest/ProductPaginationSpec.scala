@@ -11,13 +11,13 @@ import scala.util.{Random, Success}
 /**
   *
   */
-class ProductPaginationSpec (implicit val ee: ExecutionEnv) extends TestOperatorInScopeContext with BeforeAll {
+class ProductPaginationSpec(implicit val ee : ExecutionEnv) extends TestOperatorInScopeContext with BeforeAll {
 
     private var products : Seq[Product] = Seq[Product]()
 
     val timeout = 2500 milliseconds
 
-    private def createProducts(howMuch : Int) = Seq.fill(5){
+    private def createProducts(howMuch : Int) = Seq.fill(5) {
         operator.products.create {
             Thread.sleep(50)
             Product(name = Some(Random.nextString(12)))
@@ -38,7 +38,8 @@ class ProductPaginationSpec (implicit val ee: ExecutionEnv) extends TestOperator
     private def normalizeComparison(t : Product) = t.copy(properties = None, updatedAt = None)
 
 
-    def is = sequential ^ s2"""
+    def is = sequential ^
+        s2"""
         The Product Pagination
             returns all 5 results by default                            $allResults
             understands perPage query parameter                         $perPageQp
@@ -46,7 +47,8 @@ class ProductPaginationSpec (implicit val ee: ExecutionEnv) extends TestOperator
     """
 
     def allResults() = {
-        operator.products.list().exec.map(_.items.map(normalizeComparison)) must containTheSameElementsAs(products.map(normalizeComparison)).await
+        operator.products.list().exec.map(_.items.map(normalizeComparison)) must containTheSameElementsAs(products
+            .map(normalizeComparison)).await
     }
 
     def perPageQp() = {
@@ -56,7 +58,8 @@ class ProductPaginationSpec (implicit val ee: ExecutionEnv) extends TestOperator
     }
 
     def allowsToIterate() = {
-        def iteratePages(current : EvtGetPageRequest[Product], acc : Seq[Product]) : Future[Seq[Product]] = current.exec flatMap { page =>
+        def iteratePages(current : EvtGetPageRequest[Product], acc : Seq[Product]) : Future[Seq[Product]] = current
+            .exec flatMap { page =>
             operator.nextPage(page) match {
                 case Some(req) =>
                     iteratePages(req, acc ++ page.items)
@@ -65,6 +68,7 @@ class ProductPaginationSpec (implicit val ee: ExecutionEnv) extends TestOperator
             }
         }
 
-        iteratePages(operator.products.list().perPage(2), Seq()).map(_.map(normalizeComparison)) must containTheSameElementsAs(products.map(normalizeComparison)).await
+        iteratePages(operator.products.list().perPage(2), Seq())
+            .map(_.map(normalizeComparison)) must containTheSameElementsAs(products.map(normalizeComparison)).await
     }
 }

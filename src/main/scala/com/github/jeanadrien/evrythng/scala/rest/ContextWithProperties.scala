@@ -19,7 +19,9 @@ trait ContextWithProperties extends RestContext {
 
         def list = getPage[Property](s"${contextRoot}/properties")
 
-        def create(properties: List[Property]) = put[List[Property], List[Property]](s"${contextRoot}/properties", properties)
+        def create(
+            properties : List[Property]
+        ) = put[List[Property], List[Property]](s"${contextRoot}/properties", properties)
 
         def remove = delete(s"${contextRoot}/properties")
 

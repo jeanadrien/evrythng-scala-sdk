@@ -32,7 +32,7 @@ class PlayHttpClient extends HttpRestClient {
     }
 
     override def buildRequest(
-        url             : String,
+        url : String,
         headers         : Seq[(String, String)],
         queryParameters : Seq[(String, String)]
     ) : HttpRestRequest = new HttpRestRequest {
@@ -42,17 +42,19 @@ class PlayHttpClient extends HttpRestClient {
             withHeaders(headers : _*).
             withQueryString(queryParameters : _*)
 
-        override def get(): Future[HttpRestResponse] = req.get().map(toHttpRestResponse)
-        override def put(body: String): Future[HttpRestResponse] = req.put(body).map(toHttpRestResponse)
-        override def delete(): Future[HttpRestResponse] = req.delete().map(toHttpRestResponse)
+        override def get() : Future[HttpRestResponse] = req.get().map(toHttpRestResponse)
+
+        override def put(body : String) : Future[HttpRestResponse] = req.put(body).map(toHttpRestResponse)
+
+        override def delete() : Future[HttpRestResponse] = req.delete().map(toHttpRestResponse)
 
         override def post(
             body : String
-        ) : Future[HttpRestResponse] =  req.post(body).map(toHttpRestResponse)
+        ) : Future[HttpRestResponse] = req.post(body).map(toHttpRestResponse)
 
     }
 
-    def shutDown(): Unit = {
+    def shutDown() : Unit = {
         wsClient.close()
         system.terminate().onComplete {
             case Failure(t) =>

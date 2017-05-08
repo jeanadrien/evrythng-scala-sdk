@@ -8,10 +8,10 @@ import com.typesafe.scalalogging.LazyLogging
   * /actions
   */
 class ActionTypesContext(val apiKey : String, projectScope : Option[Ref] = None) extends
-Environment with AuthorizedEnvironment with LazyLogging with ContextWithActions {
+    Environment with AuthorizedEnvironment with LazyLogging with ContextWithActions {
 
     override def defaultQueryParams : Seq[(String, String)] = super
-    .defaultQueryParams ++ projectScope.map("project" -> _.toString)
+        .defaultQueryParams ++ projectScope.map("project" -> _.toString)
 
     def list = getPage[ActionType]("/actions")
 

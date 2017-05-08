@@ -13,9 +13,10 @@ import scala.util.Random
 /**
   *
   */
-class RedirectionCrudSpec(implicit val ee: ExecutionEnv) extends TestOperatorContext with BeforeAll {
+class RedirectionCrudSpec(implicit val ee : ExecutionEnv) extends TestOperatorContext with BeforeAll {
 
-    def is = sequential ^ s2"""
+    def is = sequential ^
+        s2"""
         The Redirection API offers to
             create a Redirection                            $createARedirection
             and read it                                     $readARedirection
@@ -54,11 +55,12 @@ class RedirectionCrudSpec(implicit val ee: ExecutionEnv) extends TestOperatorCon
         )).exec.map { r =>
             theRedirection = r
             (r.shortDomain.get, r.defaultRedirectUrl.get)
-        } must beEqualTo((expectedShortDomain,redirectionUrl)).await
+        } must beEqualTo((expectedShortDomain, redirectionUrl)).await
     }
 
     def readARedirection =
-        operator.redirections.read(theRedirection.shortId.get).exec.map(compare) must beEqualTo(compare(theRedirection)).await
+        operator.redirections.read(theRedirection.shortId.get).exec.map(compare) must beEqualTo(compare(theRedirection))
+            .await
 
     def obtainAQrCode =
         operator.redirections.qr(theRedirection.shortId.get).exec must not be empty.await
@@ -74,10 +76,10 @@ class RedirectionCrudSpec(implicit val ee: ExecutionEnv) extends TestOperatorCon
     }
 
     def performALookup =
-        operator.redirections.lookup(aThng.id.get).exec map(_.items.map(compare)) must
-            containTheSameElementsAs((theRedirection::Nil).map(compare)).await
+        operator.redirections.lookup(aThng.id.get).exec map (_.items.map(compare)) must
+            containTheSameElementsAs((theRedirection :: Nil).map(compare)).await
 
-    def anonSeeARedirection = env.anonymousApi.shortId(theRedirection.shortId.get).exec map(compare) must
+    def anonSeeARedirection = env.anonymousApi.shortId(theRedirection.shortId.get).exec map (compare) must
         beEqualTo(compare(theRedirection)).await
 
     def deleteARedirection = operator.redirections.remove(theRedirection.shortId.get).exec must beEqualTo(()).await

@@ -17,12 +17,14 @@ class ThngContext(thngId : Ref, val apiKey : String, val projectScope : Option[R
 
         override def apply(
             actionType : String
-        ) : ActionContext =  new ActionContext(s"/thngs/${thngId}", actionType, apiKey, projectScope)
+        ) : ActionContext = new ActionContext(s"/thngs/${thngId}", actionType, apiKey, projectScope)
     }
 
     val location = new {
 
-        def create(locations : List[Location]) = put[List[Location], List[Location]](s"/thngs/${thngId}/location", locations)
+        def create(
+            locations : List[Location]
+        ) = put[List[Location], List[Location]](s"/thngs/${thngId}/location", locations)
 
         def list = getPage[Location](s"/thngs/${thngId}/location")
 

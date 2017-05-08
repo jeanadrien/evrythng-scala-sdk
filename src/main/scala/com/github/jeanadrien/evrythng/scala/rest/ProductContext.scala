@@ -16,7 +16,7 @@ class ProductContext(productId : Ref, val apiKey : String, val projectScope : Op
 
         override def apply(
             actionType : String
-        ) : ActionContext =  new ActionContext(s"/products/${productId}", actionType, apiKey, projectScope)
+        ) : ActionContext = new ActionContext(s"/products/${productId}", actionType, apiKey, projectScope)
     }
 
     override def contextRoot : String = s"/products/${productId}"

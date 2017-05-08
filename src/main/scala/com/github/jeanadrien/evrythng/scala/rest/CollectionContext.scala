@@ -7,7 +7,7 @@ import com.typesafe.scalalogging.LazyLogging
 /**
   *
   */
-class CollectionContext(collectionId: Ref, val apiKey : String, projectScope : Option[Ref] = None) extends
+class CollectionContext(collectionId : Ref, val apiKey : String, projectScope : Option[Ref] = None) extends
     Environment with AuthorizedEnvironment with LazyLogging {
 
     self =>
@@ -35,7 +35,8 @@ class CollectionContext(collectionId: Ref, val apiKey : String, projectScope : O
         def add(collectionIds : List[Ref]) =
             self.postAndForget[List[Ref]](s"/collections/${collectionId}/collections", collectionIds)
 
-        def remove(toRemoveCollectionId : Ref) = self.delete(s"/collections/${collectionId}/collections/${toRemoveCollectionId}")
+        def remove(toRemoveCollectionId : Ref) = self
+            .delete(s"/collections/${collectionId}/collections/${toRemoveCollectionId}")
 
         def removeAll() = self.delete(s"/collections/${collectionId}/collections")
 
@@ -45,6 +46,6 @@ class CollectionContext(collectionId: Ref, val apiKey : String, projectScope : O
 
         override def apply(
             actionType : String
-        ) : ActionContext =  new ActionContext(s"/collections/${collectionId}", actionType, apiKey, projectScope)
+        ) : ActionContext = new ActionContext(s"/collections/${collectionId}", actionType, apiKey, projectScope)
     }
 }

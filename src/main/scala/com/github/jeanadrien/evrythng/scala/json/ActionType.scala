@@ -13,15 +13,15 @@ import spray.json.JsValue
   *     ...
   *   },
   *   "tags": [ String, ... ]
-*}
+  *}
   */
 case class ActionType(
-    id : Option[String] = None, // TODO try with Ref
-    name : Option[String] = None,
-    createdAt : Option[Long] = None,
-    updatedAt : Option[Long] = None,
+    id           : Option[String] = None, // TODO try with Ref
+    name         : Option[String] = None,
+    createdAt    : Option[Long] = None,
+    updatedAt    : Option[Long] = None,
     customFields : Option[Map[String, JsValue]] = None,
-    tags : Option[List[String]] = None
+    tags         : Option[List[String]] = None
 ) {
 
 }

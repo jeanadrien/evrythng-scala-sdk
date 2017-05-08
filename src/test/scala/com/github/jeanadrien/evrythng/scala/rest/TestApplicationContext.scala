@@ -19,7 +19,7 @@ abstract class TestApplicationContext extends TestOperatorContext with BeforeAll
     var containingProject : Project = null
     var application : Application = null
 
-    override def beforeAll() : Unit = Await.ready( for {
+    override def beforeAll() : Unit = Await.ready(for {
         project <- operator.projects.create(Project(
             name = Some(s"itproject-${Random.nextInt(200000)}")
         )).exec
@@ -33,6 +33,6 @@ abstract class TestApplicationContext extends TestOperatorContext with BeforeAll
         this.applicationApi = env.applicationApi(application)
         this.containingProject = project
         ()
-    } , 10 seconds)
+    }, 10 seconds)
 
 }

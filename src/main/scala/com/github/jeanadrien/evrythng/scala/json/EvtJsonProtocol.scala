@@ -8,7 +8,8 @@ import spray.json._
 object EvtJsonProtocol extends DefaultJsonProtocol {
 
     implicit object RefJsonFormat extends JsonFormat[Ref] {
-        def write(ref: Ref) = JsString(ref.id)
+        def write(ref : Ref) = JsString(ref.id)
+
         def read(value : JsValue) = value match {
             case JsString(str) => Ref(str)
             case _ => deserializationError("Ref must be a String")
@@ -16,9 +17,10 @@ object EvtJsonProtocol extends DefaultJsonProtocol {
     }
 
     implicit object PositionFormat extends JsonFormat[Position] {
-        def write(ref: Position) = JsObject(
+        def write(ref : Position) = JsObject(
             "coordinates" -> JsArray(JsNumber(ref.x), JsNumber(ref.y))
         )
+
         def read(value : JsValue) = value match {
             case JsObject(content) if content.contains("coordinates") =>
                 content.apply("coordinates") match {

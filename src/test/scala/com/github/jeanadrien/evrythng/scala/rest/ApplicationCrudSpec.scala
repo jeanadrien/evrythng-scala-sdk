@@ -54,7 +54,7 @@ class ApplicationCrudSpec(implicit val ee : ExecutionEnv) extends TestOperatorCo
             description = Some(randomDescription),
             defaultUrl = Some("http://default.url"),
             socialNetworks = Some(Map()),
-            tags = Some("t1"::"t3"::Nil),
+            tags = Some("t1" :: "t3" :: Nil),
             customFields = Some(Map("cf1" -> JsString("cf1val"), "cf2" -> JsString("cf2val")))
         )
 
@@ -73,17 +73,20 @@ class ApplicationCrudSpec(implicit val ee : ExecutionEnv) extends TestOperatorCo
     def updateTheApplication = {
         val newRandomname = Random.nextString(10)
 
-        operator.project(containingProject.id.get).applications.update(theApplication.id.get, Application(name = Some(newRandomname))).exec map { t =>
+        operator.project(containingProject.id.get).applications
+            .update(theApplication.id.get, Application(name = Some(newRandomname))).exec map { t =>
             theApplication = t
             t.name.get
         } must beEqualTo(newRandomname).awaitFor(timeout)
     }
 
     def deleteTheApplication =
-        operator.project(containingProject.id.get).applications.remove(theApplication.id.get).exec must beEqualTo(()).awaitFor(timeout)
+        operator.project(containingProject.id.get).applications.remove(theApplication.id.get).exec must beEqualTo(())
+            .awaitFor(timeout)
 
     def missTheApplication =
-        operator.project(containingProject.id.get).applications.read(theApplication.id.get).exec must throwAn[EvtRequestException].like {
+        operator.project(containingProject.id.get).applications.read(theApplication.id.get)
+            .exec must throwAn[EvtRequestException].like {
             case e : EvtRequestException => e.evtError.status must beEqualTo(404)
         }.awaitFor(timeout)
 

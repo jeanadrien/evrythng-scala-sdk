@@ -18,6 +18,6 @@ trait TestSettings {
 
 object TestSettings {
 
-    lazy val config: Config = ConfigFactory.load("test.conf")
+    lazy val config : Config = ConfigFactory.load("test.conf")
 
 }

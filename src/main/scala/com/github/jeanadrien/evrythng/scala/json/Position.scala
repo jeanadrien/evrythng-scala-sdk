@@ -3,7 +3,7 @@ package com.github.jeanadrien.evrythng.scala.json
 /**
   *
   */
-case class Position(x : Double, y : Double)  {
+case class Position(x : Double, y : Double) {
 
     def toLocation = Location(latitude = Some(y), longitude = Some(x))
 

@@ -26,21 +26,21 @@ abstract class EvtRequest(url : String, apiKey : Option[String]) extends LazyLog
         EvtRequest.httpRestClient.buildRequest(url,
             Seq("Accept" -> "application/json",
                 "Content-Type" -> "application/json") ++
-                apiKey.toSeq.map( "Authorization" -> _),
-        queryString.toSeq)
+                apiKey.toSeq.map("Authorization" -> _),
+            queryString.toSeq)
 
     protected val responseLog = (restResponse : HttpRestResponse) =>
         s"${restResponse.status} ${restResponse.statusText} ${restResponse.body}"
 
     protected def accept(expectedStatusCode : Int*) : HttpRestResponse => HttpRestResponse = { restResponse =>
         logger.debug(s"<<< Response ${responseLog(restResponse)}")
-        if (! expectedStatusCode.contains(restResponse.status)) {
+        if (!expectedStatusCode.contains(restResponse.status)) {
             try {
                 val json = restResponse.body.parseJson
                 val evtError = json.convertTo[EvtError]
                 throw new EvtRequestException(evtError)
             } catch {
-                case e: DeserializationException =>
+                case e : DeserializationException =>
                     throw new EvtRequestException(EvtError(
                         restResponse.status,
                         restResponse.body :: Nil,
@@ -67,7 +67,8 @@ abstract class EvtRequest(url : String, apiKey : Option[String]) extends LazyLog
     def project(projectObj : Project) : RequestType = project(projectObj.id.get)
 
     override def toString : String = {
-        val qs = if (queryString.isEmpty) "" else "?"+queryString.toSeq.map { case (a, b) => s"${a}=${b}" }.mkString("&")
+        val qs = if (queryString.isEmpty) "" else "?" + queryString.toSeq.map { case (a, b) => s"${a}=${b}" }
+            .mkString("&")
         val key = apiKey.map(s => s" [Authorization: ${mask(s)}]").getOrElse("")
         s"${url}${qs}${key}"
     }
@@ -99,7 +100,7 @@ class EvtGetDataRequest[T](url : String, apiKey : Option[String], accept : Strin
         EvtRequest.httpRestClient.buildRequest(url,
             Seq("Accept" -> accept,
                 "Content-Type" -> "application/json") ++
-                apiKey.toSeq.map( "Authorization" -> _),
+                apiKey.toSeq.map("Authorization" -> _),
             queryString.toSeq)
 
     override protected val responseLog = (restResponse : HttpRestResponse) =>
@@ -113,7 +114,8 @@ class EvtGetDataRequest[T](url : String, apiKey : Option[String], accept : Strin
     }
 }
 
-class EvtPostRequest[I, O](body : I, url : String, apiKey : Option[String])(implicit val writer : JsonWriter[I], implicit val reader : JsonReader[O]) extends
+class EvtPostRequest[I, O](body : I, url : String, apiKey : Option[String])
+    (implicit val writer : JsonWriter[I], implicit val reader : JsonReader[O]) extends
     EvtRequest(url, apiKey) {
 
     type RequestType = EvtPostRequest[I, O]
@@ -129,7 +131,8 @@ class EvtPostRequest[I, O](body : I, url : String, apiKey : Option[String])(impl
     }
 }
 
-class EvtPostAndForgetRequest[I](body : I, url : String, apiKey : Option[String])(implicit val writer : JsonWriter[I]) extends
+class EvtPostAndForgetRequest[I](body : I, url : String, apiKey : Option[String])
+    (implicit val writer : JsonWriter[I]) extends
     EvtRequest(url, apiKey) {
 
     type RequestType = EvtPostAndForgetRequest[I]
@@ -143,7 +146,8 @@ class EvtPostAndForgetRequest[I](body : I, url : String, apiKey : Option[String]
     }
 }
 
-class EvtPutRequest[I, O](body : I, url : String, apiKey : Option[String])(implicit val writer : JsonWriter[I], implicit val reader : JsonReader[O]) extends
+class EvtPutRequest[I, O](body : I, url : String, apiKey : Option[String])
+    (implicit val writer : JsonWriter[I], implicit val reader : JsonReader[O]) extends
     EvtRequest(url, apiKey) {
 
     type RequestType = EvtPutRequest[I, O]

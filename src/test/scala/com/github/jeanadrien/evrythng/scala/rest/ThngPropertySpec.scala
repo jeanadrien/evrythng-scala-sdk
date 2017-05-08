@@ -60,18 +60,20 @@ class ThngPropertySpec(implicit val ee : ExecutionEnv) extends TestOperatorConte
     } must containTheSameElementsAs(theProperties).await
 
     def updateProperty(key : String, value : String) =
-        operator.thng(containingThng.id.get).properties(key).update(JsString(value)).exec map { updated : List[Property] =>
-            theProperties = updated ::: theProperties
-            updated.map(_.copy(timestamp = None))
-        } must containTheSameElementsAs(Property(key = Some(key), value = JsString(value))::Nil).await
+        operator.thng(containingThng.id.get).properties(key).update(JsString(value)).exec map {
+            updated : List[Property] =>
+                theProperties = updated ::: theProperties
+                updated.map(_.copy(timestamp = None))
+        } must containTheSameElementsAs(Property(key = Some(key), value = JsString(value)) :: Nil).await
 
     def loadPropertyHistory(key : String) = operator.thng(containingThng.id.get).properties(key).list.exec map { page =>
         page.items
     } must containTheSameElementsAs(theProperties.filter(_.key == Some(key)).map(_.copy(key = None))).await
 
-    def deletePropertiesOfKey(key : String) = operator.thng(containingThng.id.get).properties(key).remove.exec map { _ =>
-        theProperties = theProperties.filterNot(_.key == Some(key))
-        ()
+    def deletePropertiesOfKey(key : String) = operator.thng(containingThng.id.get).properties(key).remove.exec map {
+        _ =>
+            theProperties = theProperties.filterNot(_.key == Some(key))
+            ()
     } must beEqualTo(()).await
 
     def deleteAllProperties = operator.thng(containingThng.id.get).properties.remove.exec map { _ =>
@@ -79,8 +81,11 @@ class ThngPropertySpec(implicit val ee : ExecutionEnv) extends TestOperatorConte
         ()
     } must beEqualTo(()).await
 
-    def addMutipleProperties = addThngProperties(randomProperty(propertyKey1)::randomProperty(propertyKey2)::Nil)
+    def addMutipleProperties = addThngProperties(randomProperty(propertyKey1) :: randomProperty(propertyKey2) :: Nil)
+
     def updatePropertyKey2 = updateProperty(propertyKey2, Random.nextString(10))
+
     def loadProperty2History = loadPropertyHistory(propertyKey2)
+
     def deleteProperty2 = deletePropertiesOfKey(propertyKey2)
 }

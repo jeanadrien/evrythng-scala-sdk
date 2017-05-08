@@ -9,9 +9,10 @@ import scala.util.Random
 /**
   *
   */
-class ProductCrudSpec(implicit val ee: ExecutionEnv) extends TestOperatorContext {
+class ProductCrudSpec(implicit val ee : ExecutionEnv) extends TestOperatorContext {
 
-    def is = sequential ^ s2"""
+    def is = sequential ^
+        s2"""
         The Product CRUD
             is creating a Product          $createTheProduct
             is reading the Product         $readTheProduct
@@ -39,9 +40,9 @@ class ProductCrudSpec(implicit val ee: ExecutionEnv) extends TestOperatorContext
             name = Some(randomName),
             description = Some(randomDescription),
             brand = Some(randomBrand),
-            categories = Some(randomCategorie1::randomCategorie2::Nil),
+            categories = Some(randomCategorie1 :: randomCategorie2 :: Nil),
             url = Some(randomUrl),
-            photos = Some(randomPhotoUrl::Nil)
+            photos = Some(randomPhotoUrl :: Nil)
         )
 
         operator.products.create(newProduct).exec map { p =>
@@ -51,7 +52,8 @@ class ProductCrudSpec(implicit val ee: ExecutionEnv) extends TestOperatorContext
     }
 
     def readTheProduct =
-        operator.products.read(theProduct.id.get).exec.map(normalizeComparison) must beEqualTo(normalizeComparison(theProduct)).awaitFor(timeout)
+        operator.products.read(theProduct.id.get).exec
+            .map(normalizeComparison) must beEqualTo(normalizeComparison(theProduct)).awaitFor(timeout)
 
     def updateTheProduct = {
         val newRandomname = Random.nextString(10)

@@ -18,7 +18,9 @@ class ApplicationRestApi(override val apiKey : String) extends
 
     // auth
     object auth {
+
         object evrythng {
+
             object users {
                 def create(user : User) = post[User, UserStatus]("/auth/evrythng/users", user)
 
@@ -35,6 +37,7 @@ class ApplicationRestApi(override val apiKey : String) extends
             def login(email : String, password : String) =
                 post[User, UserStatus]("/auth/evrythng", User(email = Some(email), password = Some(password)))
         }
+
     }
 
     // products

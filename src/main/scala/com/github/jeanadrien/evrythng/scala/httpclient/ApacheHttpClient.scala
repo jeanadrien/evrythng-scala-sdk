@@ -36,11 +36,11 @@ class ApacheHttpClient extends HttpRestClient with LazyLogging {
             override val status : Int = apacheResponse.getStatusLine.getStatusCode
         }
     } finally {
-       apacheResponse.close()
+        apacheResponse.close()
     }
 
     override def buildRequest(
-        url             : String,
+        url : String,
         headers         : Seq[(String, String)],
         queryParameters : Seq[(String, String)]
     ) : HttpRestRequest = new HttpRestRequest {
@@ -53,9 +53,9 @@ class ApacheHttpClient extends HttpRestClient with LazyLogging {
         logger.debug(s"ApacheHttpClient Build URL: ${uri}")
 
         val apacheHeaders : Array[Header] =
-            headers.map { case (k, v) => new BasicHeader(k, v)} toArray
+            headers.map { case (k, v) => new BasicHeader(k, v) } toArray
 
-        override def get(): Future[HttpRestResponse] = {
+        override def get() : Future[HttpRestResponse] = {
             val httpGet = new HttpGet(uri)
             httpGet.setHeaders(apacheHeaders)
 
@@ -64,7 +64,7 @@ class ApacheHttpClient extends HttpRestClient with LazyLogging {
             }
         }
 
-        override def put(body: String): Future[HttpRestResponse] = {
+        override def put(body : String) : Future[HttpRestResponse] = {
             val httpPut = new HttpPut(uri)
             httpPut.setHeaders(apacheHeaders)
             httpPut.setEntity(new StringEntity(body, "UTF-8"))
@@ -74,7 +74,7 @@ class ApacheHttpClient extends HttpRestClient with LazyLogging {
             }
         }
 
-        override def delete(): Future[HttpRestResponse] = {
+        override def delete() : Future[HttpRestResponse] = {
             val httpDelete = new HttpDelete(uri)
             httpDelete.setHeaders(apacheHeaders)
 

@@ -11,7 +11,8 @@ class AnonymousRestApiSpec(implicit val ee : ExecutionEnv) extends Specification
 
     val anonymousApi = Environment.anonymousApi
 
-    def is = sequential ^ s2"""
+    def is = sequential ^
+        s2"""
         The Anonymous API allows to
             know what time is it           $whatTimeIsIt
     """

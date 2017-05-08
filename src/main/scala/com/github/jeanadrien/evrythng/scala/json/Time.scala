@@ -9,8 +9,8 @@ package com.github.jeanadrien.evrythng.scala.json
   * }
   */
 case class Time(
-    timestamp : Long,
-    localTime : Option[String],
+    timestamp  : Long,
+    localTime  : Option[String],
     nextChange : Option[Long],
-    offset : Option[Long]
+    offset     : Option[Long]
 )

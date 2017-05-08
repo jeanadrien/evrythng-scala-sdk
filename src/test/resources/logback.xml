@@ -8,12 +8,12 @@
         </encoder>
     </appender>
 
-    <logger name="com.github.jeanadrien.evrythng.scala" level="DEBUG" />
-    <logger name="play.api.libs.ws.ahc" level="DEBUG" />
-    <logger name="org.apache.http" level="INFO" />
+    <logger name="com.github.jeanadrien.evrythng.scala" level="DEBUG"/>
+    <logger name="play.api.libs.ws.ahc" level="DEBUG"/>
+    <logger name="org.apache.http" level="INFO"/>
 
     <root level="WARN">
-        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="CONSOLE"/>
     </root>
 
 </configuration>
