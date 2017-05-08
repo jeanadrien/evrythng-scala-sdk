@@ -66,7 +66,7 @@ class ProjectCrudSpec(implicit val ee : ExecutionEnv) extends TestOperatorContex
     }
 
     def deleteTheProject =
-        operator.projects.delete(theProject.id.get).exec must beEqualTo(()).awaitFor(timeout)
+        operator.projects.remove(theProject.id.get).exec must beEqualTo(()).awaitFor(timeout)
 
     def missTheProject =
         operator.projects.read(theProject.id.get).exec must throwAn[EvtRequestException].like {

@@ -61,7 +61,7 @@ class CollectionCrudSpec(implicit val ee : ExecutionEnv) extends TestOperatorCon
     }
 
     def deleteTheCollection =
-        operator.collections.delete(theCollection.id.get).exec must beEqualTo(()).awaitFor(timeout)
+        operator.collections.remove(theCollection.id.get).exec must beEqualTo(()).awaitFor(timeout)
 
     def missTheCollection =
         operator.collections.read(theCollection.id.get).exec must throwAn[EvtRequestException].like {

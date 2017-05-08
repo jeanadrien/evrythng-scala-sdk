@@ -94,7 +94,7 @@ class PlaceCrudSpec(implicit val ee: ExecutionEnv) extends TestOperatorContext {
     }
 
     def deleteThePlace =
-        operator.places.delete(thePlace.id.get).exec must beEqualTo(()).awaitFor(timeout)
+        operator.places.remove(thePlace.id.get).exec must beEqualTo(()).awaitFor(timeout)
 
     def missThePlace =
         operator.places.read(thePlace.id.get).exec must throwAn[EvtRequestException].like {

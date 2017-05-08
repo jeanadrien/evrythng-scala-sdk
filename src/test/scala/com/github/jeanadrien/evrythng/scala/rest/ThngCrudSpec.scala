@@ -81,7 +81,7 @@ class ThngCrudSpec(implicit val ee: ExecutionEnv) extends TestOperatorContext {
     }
 
     def deleteTheThng =
-        operator.thngs.delete(theThng.id.get).exec must beEqualTo(()).awaitFor(timeout)
+        operator.thngs.remove(theThng.id.get).exec must beEqualTo(()).awaitFor(timeout)
 
     def missTheThng =
         operator.thngs.read(theThng.id.get).exec must throwAn[EvtRequestException].like {

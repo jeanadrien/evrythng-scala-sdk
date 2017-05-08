@@ -80,7 +80,7 @@ class ApplicationCrudSpec(implicit val ee : ExecutionEnv) extends TestOperatorCo
     }
 
     def deleteTheApplication =
-        operator.project(containingProject.id.get).applications.delete(theApplication.id.get).exec must beEqualTo(()).awaitFor(timeout)
+        operator.project(containingProject.id.get).applications.remove(theApplication.id.get).exec must beEqualTo(()).awaitFor(timeout)
 
     def missTheApplication =
         operator.project(containingProject.id.get).applications.read(theApplication.id.get).exec must throwAn[EvtRequestException].like {

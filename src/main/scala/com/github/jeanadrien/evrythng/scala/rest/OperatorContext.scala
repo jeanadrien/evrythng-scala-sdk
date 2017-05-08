@@ -24,13 +24,7 @@ Environment with AuthorizedEnvironment with LazyLogging {
 
     // thngs
 
-    val thngs = new CrudResource[Thng] {
-        val format = implicitly[JsonFormat[Thng]]
-
-        val env = self
-        val urlPath = "/thngs"
-
-    }
+    val thngs = new ResourceContext[Thng](this, "/thngs") with Crud[Thng]
 
     def thng(thngId : Ref) = new ThngContext(thngId, apiKey, projectScope)
 
@@ -43,23 +37,13 @@ Environment with AuthorizedEnvironment with LazyLogging {
 
     // collections
 
-    val collections = new CrudResource[Collection] {
-        val format = implicitly[JsonFormat[Collection]]
-
-        val env = self
-        val urlPath = "/collections"
-    }
+    val collections = new ResourceContext[Collection](this, "/collections") with Crud[Collection]
 
     def collection(collectionId : Ref) = new CollectionContext(collectionId, apiKey, projectScope)
 
     // projects
 
-    val projects = new CrudResource[Project] {
-        val format = implicitly[JsonFormat[Project]]
-
-        val env = self
-        val urlPath = "/projects"
-    }
+    val projects = new ResourceContext[Project](this, "/projects") with Crud[Project]
 
     def project(projectId : Ref) = new ProjectContext(apiKey, projectId)
 
@@ -70,11 +54,7 @@ Environment with AuthorizedEnvironment with LazyLogging {
 
     // places
 
-    object places extends CrudResource[Place] {
-        val format = implicitly[JsonFormat[Place]]
-
-        val env = self
-        val urlPath = "/places"
+    object places extends ResourceContext[Place](this, "/places") with Crud[Place] {
 
         def listAround(position : (Double, Double), maxDist : Double) = list().queryParameter(
             "lat" -> position._2.toString,

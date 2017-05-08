@@ -13,12 +13,7 @@ class ProjectContext(val apiKey : String, projectId: Ref) extends
 
     self =>
 
-    val applications = new CrudResource[Application] {
-        val format = implicitly[JsonFormat[Application]]
-
-        val env = self
-        val urlPath = s"/projects/${projectId}/applications"
-    }
+    val applications = new ResourceContext[Application](this, s"/projects/${projectId}/applications") with Crud[Application]
 
     def application(id : Ref) = new ApplicationContext(projectId, id, apiKey)
 
