@@ -20,6 +20,15 @@ scmInfo := Some(
     )
 )
 
+// publish setup
+publishTo := {
+    val nexus = "https://oss.sonatype.org/"
+    if (isSnapshot.value)
+        Some("snapshots" at nexus + "content/repositories/snapshots")
+    else
+        Some("releases"  at nexus + "service/local/staging/deploy/maven2")
+}
+
 // Dependencies
 libraryDependencies += "io.spray" %% "spray-json" % "1.3.2"
 libraryDependencies += "com.typesafe.scala-logging" %% "scala-logging" % "3.5.0"
