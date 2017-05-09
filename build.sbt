@@ -1,11 +1,7 @@
 organization := "com.github.jeanadrien"
 name := "evrythng-scala-sdk"
-version := "0.1.0-SNAPSHOT"
 
 scalaVersion := "2.11.8"
-
-pomIncludeRepository := { _ => false }
-publishMavenStyle := true
 
 licenses := Seq(
     "Apache License, Version 2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0")
@@ -17,6 +13,15 @@ scmInfo := Some(
     ScmInfo(
         url("https://github.com/jeanadrien/evrythng-scala-sdk"),
         "scm:git@github.com:jeanadrien/evrythng-scala-sdk.git"
+    )
+)
+
+developers := List(
+    Developer(
+        id    = "jeanadrien",
+        name  = "Jean-Adrien Vaucher",
+        email = "jean@jeanjean.ch",
+        url   = url("https://github.com/jeanadrien")
     )
 )
 
@@ -45,3 +50,9 @@ libraryDependencies += "org.apache.httpcomponents" % "httpcore" % "4.4.5" % "tes
 libraryDependencies += "org.apache.httpcomponents" % "httpclient" % "4.5.2" % "test"
 libraryDependencies += "com.typesafe.play" %% "play-ws" % "2.5.14" % "test"
 
+// build settings
+pomIncludeRepository := { _ => false }
+publishMavenStyle := true
+
+lazy val root = project.in(file("."))
+    .settings(releaseProcess := ReleaseProcess.process)
