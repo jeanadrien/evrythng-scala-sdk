@@ -54,7 +54,7 @@ class PlayHttpClient extends HttpRestClient {
 
     }
 
-    def shutDown() : Unit = {
+    override def shutDown() : Unit = {
         wsClient.close()
         system.terminate().onComplete {
             case Failure(t) =>

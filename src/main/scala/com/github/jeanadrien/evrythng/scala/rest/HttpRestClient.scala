@@ -11,4 +11,6 @@ trait HttpRestClient {
         queryParameters : Seq[(String, String)]
     ) : HttpRestRequest
 
+    def shutDown : Unit
+
 }

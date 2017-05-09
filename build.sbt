@@ -37,6 +37,7 @@ publishTo := {
 // Dependencies
 libraryDependencies += "io.spray" %% "spray-json" % "1.3.2"
 libraryDependencies += "com.typesafe.scala-logging" %% "scala-logging" % "3.5.0"
+libraryDependencies += "com.typesafe" % "config" % "1.3.1"
 
 // Http client adapters. Provided.
 libraryDependencies += "com.typesafe.play" %% "play-ws" % "2.5.14" % "provided"
@@ -53,6 +54,7 @@ libraryDependencies += "com.typesafe.play" %% "play-ws" % "2.5.14" % "test"
 // build settings
 pomIncludeRepository := { _ => false }
 publishMavenStyle := true
+publishArtifact in Test := false
 
 lazy val root = project.in(file("."))
     .settings(releaseProcess := ReleaseProcess.process)

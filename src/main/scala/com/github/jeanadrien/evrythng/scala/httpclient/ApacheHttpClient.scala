@@ -39,6 +39,10 @@ class ApacheHttpClient extends HttpRestClient with LazyLogging {
         apacheResponse.close()
     }
 
+    override def shutDown: Unit = {
+        httpClient.close()
+    }
+
     override def buildRequest(
         url : String,
         headers         : Seq[(String, String)],
