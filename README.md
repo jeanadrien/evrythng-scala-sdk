@@ -83,7 +83,7 @@ import scala.util.{Success, Failure}
 
 val env = Environment.operatorApi("MY-OPERATOR-API-KEY")
 
-// Create an read a thng
+// Create and read a Thng
 (for {
     create <- env.post[Thng, Thng]("/thngs", Thng(
                   name = Some("This is a test")
@@ -106,7 +106,7 @@ Each endpoints can be constructed by a natural method chaining, following the AP
  
 * E.g. to access `/thngs/<id>/properties`
 
-```
+```scala
 env.thng(Ref("Uk7h9Qb2BgPw9pwRwgcAhqDq")).properties.list.exec onComplete {
     case Success(t) =>
         println(s"Loaded ${t.items}")
@@ -117,7 +117,7 @@ env.thng(Ref("Uk7h9Qb2BgPw9pwRwgcAhqDq")).properties.list.exec onComplete {
 
 * Create a product _scan_ action `/products/<id>/actions/scans`
 
-```
+```scala
 env.product(Ref("Uk7FRRBwBgsaQpRaRYHQ2Akn")).actions("scans").create(Action()).exec onComplete {
     case Success(a) =>
         println(s"Created ${a}")
@@ -141,7 +141,7 @@ the next page link into the _Link_ http header.
 The `list` method of the Structured API provides a `Page` object which encapsulates both the results and the possible
 next page _link_. Simply pass the page to the `nextPage` method on your _Environment_ to get the next results:
  
-```
+```scala
 
 (for {
   page1 <- env.thngs.list.perPage(2).exec
